@@ -13,7 +13,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "om.example.waguwaguCustomer"
+      "bundleIdentifier": "om.example.waguwaguCustomer",
+      "googleServicesFile": "./google-services.json"
     },
     "android": {
       "adaptiveIcon": {

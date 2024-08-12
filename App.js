@@ -29,6 +29,8 @@ import ReviewSectionScreen from "./screen/ReviewSectionScreen";
 import messaging from "@react-native-firebase/messaging";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { registerRootComponent } from "expo";
+// import RemoteConfig from "@react-native-firebase/remote-config";
 
 export default function App() {
   const BottomTab = createMaterialBottomTabNavigator();
@@ -82,11 +84,11 @@ export default function App() {
     });
   };
 
-  useEffect(() => {
-    getFcmToken();
-    saveUserToken();
-    subscribe();
-  }, [FcmToken]);
+  // useEffect(() => {
+  //   getFcmToken();
+  //   saveUserToken();
+  //   subscribe();
+  // }, [FcmToken]);
   ///
   const BottomView = () => {
     return (
@@ -271,6 +273,7 @@ export default function App() {
     </RecoilRoot>
   );
 }
+// registerRootComponent(App);
 
 const styles = StyleSheet.create({
   container: {
