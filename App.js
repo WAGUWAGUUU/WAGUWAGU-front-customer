@@ -1,7 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useEffect, useState } from "react";
+// import { AppRegistry } from "react-native";
+
+import { name as appName } from "./app.json";
+import { Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -23,11 +26,68 @@ import MenuDetailScreen from "./screen/MenuDetailScreen";
 import KaKaoLoginScreen from "./screen/KaKaoLoginScreen";
 import ReviewForm from "./screen/ReviewForm";
 import ReviewSectionScreen from "./screen/ReviewSectionScreen";
+import messaging from "@react-native-firebase/messaging";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function App() {
   const BottomTab = createMaterialBottomTabNavigator();
   const Stack = createStackNavigator();
+  const [FcmToken, setFcmToken] = useState("");
+  ////
 
+  const saveUserToken = async () => {
+    const userId = await AsyncStorage.getItem("customerId");
+    if (Platform.OS === "android") {
+      const reqBody = {
+        userId: userId,
+        fcmToken: FcmToken,
+      };
+      try {
+        await axios.post(
+          "http://192.168.0.26:8080/api/v1/FcmTokens/save",
+          reqBody,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.error("Error saving FCM user token", error);
+      }
+    } else {
+      console.log("iOS users do not receive FCM tokens.");
+    }
+  };
+
+  const getFcmToken = async () => {
+    try {
+      if (Platform.OS === "android") {
+        // Only get FCM token for Android
+        const fcmToken = await messaging().getToken();
+        setFcmToken(fcmToken);
+        console.log("[+] FCM Token :: ", fcmToken);
+      } else {
+        console.log("[+] Skipping FCM token generation for iOS");
+      }
+    } catch (error) {
+      console.error("Error getting FCM token:", error);
+    }
+  };
+
+  const subscribe = () => {
+    messaging().onMessage(async (remoteMessage) => {
+      console.log("[+] Remote Message ", JSON.stringify(remoteMessage));
+    });
+  };
+
+  useEffect(() => {
+    getFcmToken();
+    saveUserToken();
+    subscribe();
+  }, [FcmToken]);
+  ///
   const BottomView = () => {
     return (
       <View style={{ flex: 1 }}>

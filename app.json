@@ -12,14 +12,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "om.example.waguwaguCustomer"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.example.waguwaguCustomer",
+      "package": "om.example.waguwaguCustomer",
       "googleServicesFile": "./google-services.json"
     },
     "web": {

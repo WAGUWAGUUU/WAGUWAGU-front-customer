@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612771950327",
+    "project_id": "notification-server-dbc87",
+    "storage_bucket": "notification-server-dbc87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612771950327:android:2ea5fd2f81c806bec2adf2",
+        "android_client_info": {
+          "package_name": "om.example.waguwaguCustomer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqXAP1tpHa5N6pf2BEi0C9y_1LHuVx8aE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
