@@ -22,7 +22,6 @@
     "@react-navigation/native-stack": "^6.10.1",
     "@react-navigation/stack": "^6.4.1",
     "axios": "^1.7.2",
-    "expo": "~51.0.26",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.22",
     "expo-device": "~6.0.2",
@@ -55,7 +54,9 @@
     "simple-swizzle": "^0.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0"
+    "@babel/core": "^7.24.0",
+    "expo": "^51.0.26",
+    "expo-cli": "^6.3.10"
   },
   "private": true
 }

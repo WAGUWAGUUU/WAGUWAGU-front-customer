@@ -31,6 +31,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { registerRootComponent } from "expo";
 // import RemoteConfig from "@react-native-firebase/remote-config";
+import { initializeApp } from "@react-native-firebase/app";
+initializeApp();
 
 export default function App() {
   const BottomTab = createMaterialBottomTabNavigator();
@@ -40,6 +42,8 @@ export default function App() {
 
   const saveUserToken = async () => {
     const userId = await AsyncStorage.getItem("customerId");
+    if (!userId) return;
+    console.log(userId);
     if (Platform.OS === "android") {
       const reqBody = {
         userId: userId,
@@ -84,12 +88,13 @@ export default function App() {
     });
   };
 
-  // useEffect(() => {
-  //   getFcmToken();
-  //   saveUserToken();
-  //   subscribe();
-  // }, [FcmToken]);
-  ///
+  useEffect(() => {
+    getFcmToken();
+    saveUserToken();
+    subscribe();
+  }, [FcmToken]);
+
+  //
   const BottomView = () => {
     return (
       <View style={{ flex: 1 }}>
