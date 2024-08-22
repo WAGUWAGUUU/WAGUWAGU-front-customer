@@ -129,7 +129,7 @@ export default function StoreScreen({ navigation, route }) {
             content={store.storeIntroduction}
           />
         </View>
-        {categories ? (
+        {categories && categories.length > 0 ? (
           categories.map((category) => {
             return (
               <View key={category.menuCategoryId}>

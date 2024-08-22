@@ -1,5 +1,5 @@
 import axios from "axios";
-const endpoint = "https://waguwagu.shop/api/v1/store/graphql";
+const endpoint = "http://34.41.123.200/api/v1/store/graphql";
 
 export const getMenuCategoryByStoreQL = async (variables) => {
   try {

@@ -16,7 +16,6 @@ export default function StoreListScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
 
   const getAllStoresNearUserApi = async () => {
-    console.log("121212122121122121211221211221122122121");
     try {
       const response = await getAllStoresNearUserQL({
         category: category,
@@ -27,8 +26,6 @@ export default function StoreListScreen({ navigation, route }) {
           latitude: parseFloat(await AsyncStorage.getItem("customerLatitude")),
         },
       });
-      console.log(response, "******");
-      console.log("999999999999" + response);
       console.log(
         "customerLongitude" +
           parseFloat(await AsyncStorage.getItem("customerLongitude"))
@@ -99,7 +96,7 @@ export default function StoreListScreen({ navigation, route }) {
                   }
                   fee={"배달팁 : " + store.deliveryFee + "원"}
                   onPress={() => {
-                    // navigation.navigate("StoreList");
+      
                   }}
                 />
               </TouchableOpacity>

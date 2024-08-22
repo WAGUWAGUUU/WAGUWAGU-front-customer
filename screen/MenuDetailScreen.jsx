@@ -50,7 +50,7 @@ const MenuDetailScreen = ({ navigation, route }) => {
   `;
     try {
       const response = await axios.post(
-        `https://waguwagu.shop/api/v1/store/graphql`,
+        `http://34.41.123.200/api/v1/store/graphql`,
         {
           query: GET_OPTION_LISTS,
           variables: { menuId },

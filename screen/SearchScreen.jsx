@@ -23,7 +23,7 @@ export default function SearchScreen({ navigation }) {
   const [searchHistory, setSearchHistory] = useState([]);
 
   const dimensionWidth = 300;
-  const imageBaseUrl = "https://storage.googleapis.com/waguwagu_bucket/";
+  const imageBaseUrl = "https://storage.googleapis.com/wgwg_bucket/";
 
   const handleSearch = async (type, reset = false) => {
     try {
@@ -32,7 +32,6 @@ export default function SearchScreen({ navigation }) {
         page: reset ? 0 : page,
         size: 10,
       };
-
       let data = [];
       if (type === "keyword") {
         if (!keywordQuery) {
@@ -98,6 +97,17 @@ export default function SearchScreen({ navigation }) {
         return;
       }
 
+      // Map the store data to include necessary fields
+      const storeItems = storesNearUser.map(store => ({
+        storeId: store.storeId || "1",
+        storeName: store.storeName || "초록마을 짱구할아버지네",
+        storeIntroduction: store.storeIntroduction || "안녕하세요~ 초록마을에 사는 짱구할아버지예요~",
+        storeImage: store.storeImage || "default_image_url",  // Update with actual default image if needed
+        storeMinimumOrderAmount: store.storeMinimumOrderAmount || 0,
+        deliveryFee: store.deliveryFee || 0,
+      }));
+
+      // Save store data and menus
       for (const store of storesNearUser) {
         let menuDetails = [];
         try {
@@ -137,6 +147,8 @@ export default function SearchScreen({ navigation }) {
         }
       }
 
+      // Set the results and reset the page
+      setResults(storeItems);
       handleSearch("keyword", true);
     } catch (error) {
       console.error("Failed to save stores:", error);
@@ -161,11 +173,7 @@ export default function SearchScreen({ navigation }) {
 
       // Remove last search query from history
       setSearchHistory((prevHistory) => prevHistory.slice(0, -1));
-
-      // Clear keyword query
       setKeywordQuery("");
-
-      // Navigate to Store screen
       navigation.navigate("Store", { storeId });
     } catch (error) {
       console.error("Failed to delete store by customer ID:", error);
@@ -226,15 +234,13 @@ export default function SearchScreen({ navigation }) {
             : Math.random().toString()
         }
         renderItem={({ item }) => {
-          console.log("Item Data: ", item); // Log the entire item object
+          console.log("Item Data: ", item);  // Log the entire item object
           return (
             <SearchStoreListSpeechBubble
               key={item.storeId}
               width={dimensionWidth}
               title={item.storeName}
-              image={
-                item.storeImage ? `${imageBaseUrl}${item.storeImage}` : null
-              }
+              image={item.storeImage ? `${imageBaseUrl}${item.storeImage}` : null}
               storeMinimumOrderAmount={item.storeMinimumOrderAmount}
               fee={item.deliveryFee}
               onPress={() => handleItemPress(item.storeId)}
