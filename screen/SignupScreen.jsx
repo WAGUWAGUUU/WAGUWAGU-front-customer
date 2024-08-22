@@ -244,7 +244,7 @@ const SignupScreen = ({ navigation }) => {
           >
             <SpeechBubble
               content="주소 확인"
-              backgroundColor="#94D35C"
+              backgroundColor="#EECAD5"
               textColor="#634F4F"
               height={50}
               width="100%"

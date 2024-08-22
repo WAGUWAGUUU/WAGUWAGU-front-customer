@@ -64,10 +64,11 @@ const MyPage = ({ navigation }) => {
       try {
         const res = await getInfo();
         if (res.status === 200) {
-          const { customerEmail, customerNickname, customerAddress } = res.data;
+          const { customerEmail, customerNickname, customerAddress, customerPhone } = res.data;
           if (customerNickname) setCustomerNickname(customerNickname);
           if (customerEmail) setCustomerEmail(customerEmail);
           if (customerAddress) setCustomerAddress(customerAddress);
+          if (customerPhone) setCustomerPhone(customerPhone);
         }
       } catch (error) {
         console.log("사용자 정보 불러오는 중 에러", error);
@@ -153,7 +154,7 @@ const MyPage = ({ navigation }) => {
               >
                 <SpeechBubble
                   content="주소 확인"
-                  backgroundColor="#94D35C"
+                  backgroundColor="#EECAD5"
                   textColor="#634F4F"
                   height={50}
                   width="100%"
