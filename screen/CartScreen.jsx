@@ -24,13 +24,13 @@ const CartScreen = ({ route, navigation }) => {
     const userId = await AsyncStorage.getItem("customerId");
     try {
       const response = await axios.get(
-        `http://35.184.212.63/api/v1/cart/${userId}`
+        `http://34.27.212.162/api/v1/cart/${userId}`
       );
       const fetchedCart = response.data;
       setCart(fetchedCart);
       setStoreName(response.data.storeName);
-      console.log("response data", response.data.storeName);
-
+      console.log("cartcartcartcartcartresponse data", response.data.storeName);
+      //       a
       // Ensure menuItems is defined and is an array
       if (fetchedCart.menuItems && Array.isArray(fetchedCart.menuItems)) {
         calculateCartTotal(fetchedCart.menuItems); // Update cart total after fetching data
@@ -77,7 +77,7 @@ const CartScreen = ({ route, navigation }) => {
 
     try {
       // Send the updated cart to the server
-      await axios.post("https://waguwagu.shop/api/v1/cart/save", updatedCart, {
+      await axios.post("http://34.27.212.162/api/v1/cart/save", updatedCart, {
         headers: {
           "Content-Type": "application/json",
         },

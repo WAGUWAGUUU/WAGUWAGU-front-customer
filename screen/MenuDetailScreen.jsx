@@ -106,7 +106,7 @@ const MenuDetailScreen = ({ navigation, route }) => {
 
     try {
       const response = await axios.get(
-        `https://waguwagu.shop/api/v1/cart/${userId}`
+        `http://34.27.212.162/api/v1/cart/${userId}`
       );
       console.log("ggggggggggg", response.data);
       return response.data;
@@ -149,7 +149,7 @@ const MenuDetailScreen = ({ navigation, route }) => {
         console.log("New Cart Item to Save:", cartItem);
 
         // Attempt to save the new cart item
-        await axios.post("https://waguwagu.shop/api/v1/cart/save", cartItem, {
+        await axios.post("http://34.27.212.162/api/v1/cart/save", cartItem, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -179,7 +179,7 @@ const MenuDetailScreen = ({ navigation, route }) => {
       }
       if (existingStoreId !== storeId && cartData.menuItems.length === 0) {
         const res = await axios.delete(
-          `https://waguwagu.shop/api/v1/cart/clear/${userId}`
+          `http://34.27.212.162/api/v1/cart/clear/${userId}`
         );
         console.log({ res });
       }
@@ -211,7 +211,7 @@ const MenuDetailScreen = ({ navigation, route }) => {
       console.log("Cart Item to Save:", cartItem);
 
       // Attempt to save the cart item
-      await axios.post("https://waguwagu.shop/api/v1/cart/save", cartItem, {
+      await axios.post("http://34.27.212.162/api/v1/cart/save", cartItem, {
         headers: {
           "Content-Type": "application/json",
         },

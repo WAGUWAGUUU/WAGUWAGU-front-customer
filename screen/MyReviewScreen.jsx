@@ -19,7 +19,7 @@ const MyReviewScreen = ({ userId }) => {
       const userId = await AsyncStorage.getItem("customerId");
       try {
         const response = await fetch(
-          `https://waguwagu.com/api/v1/reviews/myReview/${userId}`
+          `http://34.27.212.162/api/v1/reviews/myReview/${userId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");

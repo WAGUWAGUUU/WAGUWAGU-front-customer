@@ -14,7 +14,7 @@ const ReviewSectionScreen = ({ navigation, route }) => {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(
-        `https://waguwagu.shop/api/v1/reviews/store/${storeId}`
+        `http://34.27.212.162/api/v1/reviews/store/${storeId}`
       );
       console.log(storeId);
       setReviews(response.data);
