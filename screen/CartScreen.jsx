@@ -8,18 +8,22 @@ import {
   SafeAreaView,
   ScrollView,
   RefreshControl,
+  Alert,
 } from "react-native";
 import axios from "axios";
 import { Image } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CartScreen = ({ route, navigation }) => {
-  // const { storeName } = route.params;
+  const { minOrder } = route.params;
+  const { storeDeliveryTime } = route.params;
+
   const [storeName, setStoreName] = useState("");
   const [cart, setCart] = useState(null);
   const [cartTotal, setCartTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  // Use minOrder for validation
   const fetchCartItems = async () => {
     const userId = await AsyncStorage.getItem("customerId");
     try {
@@ -30,42 +34,36 @@ const CartScreen = ({ route, navigation }) => {
       setCart(fetchedCart);
       setStoreName(response.data.storeName);
       console.log("cartcartcartcartcartresponse data", response.data.storeName);
-      //       a
-      // Ensure menuItems is defined and is an array
       if (fetchedCart.menuItems && Array.isArray(fetchedCart.menuItems)) {
-        calculateCartTotal(fetchedCart.menuItems); // Update cart total after fetching data
+        calculateCartTotal(fetchedCart.menuItems);
       } else {
-        setCartTotal(0); // Set total to 0 if menuItems is not available
+        setCartTotal(0);
       }
     } catch (error) {
       console.error("Error fetching cart items:", error);
-      // Handle error and provide feedback to the user if needed
     } finally {
       setLoading(false);
     }
   };
 
-  // Calculate cart total based on menu items and their options
   const calculateCartTotal = (menuItems) => {
     if (!menuItems || menuItems.length === 0) {
       setCartTotal(0);
       return;
     }
 
-    // Sum the totalPrice of each menu item
     const total = menuItems.reduce((acc, menu) => {
-      return acc + (menu.totalPrice || 0); // Use 0 as fallback if totalPrice is undefined
+      return acc + (menu.totalPrice || 0);
     }, 0);
 
-    // Update the cartTotal state
     setCartTotal(total);
   };
 
   useEffect(() => {
     fetchCartItems();
+    console.log("CartScreen - minOrder received:", route.params.minOrder);
   }, []);
 
-  // Delete a menu item and update the cart
   const deleteMenuItem = async (index) => {
     if (!cart || !cart.menuItems) return; // Safeguard for empty cart
 
@@ -113,11 +111,25 @@ const CartScreen = ({ route, navigation }) => {
   }
 
   const handleCheckout = () => {
-    navigation.navigate("OrderScreen", {
-      cartTotal,
-      cart: cart,
-    });
-    console.log("checkout button log", JSON.stringify(cart));
+    if (cartTotal < minOrder) {
+      Alert.alert(
+        "최소 금액 보다 적음",
+        `최소금액 ${minOrder}원 이상만 주문 가능합니다.`,
+        [{ text: "OK" }]
+      );
+    } else {
+      navigation.navigate("OrderScreen", {
+        cartTotal,
+        cart: cart,
+        storeDeliveryTime: storeDeliveryTime,
+      });
+      console.log(
+        "checkout button log",
+        JSON.stringify(cart),
+        cartTotal,
+        minOrder
+      );
+    }
   };
 
   const renderItem = ({ item }) =>

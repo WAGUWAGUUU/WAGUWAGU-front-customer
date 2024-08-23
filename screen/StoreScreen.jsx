@@ -78,6 +78,7 @@ export default function StoreScreen({ navigation, route }) {
   }, []);
 
   const dimensionWidth = Dimensions.get("window").width / 1.2;
+  console.log("Store Minimum Order Amount:", store.storeMinimumOrderAmount);
 
   return (
     <ScrollView style={styles.box}>
@@ -109,6 +110,7 @@ export default function StoreScreen({ navigation, route }) {
             <Text>리뷰보러가기</Text>
           </Pressable>
           <Text style={styles.text}>
+            배달 :{" "}
             {parseInt(store.distanceFromStoreToCustomer * 4 + 10) +
               "~" +
               parseInt(store.distanceFromStoreToCustomer * 4 + 25) +
@@ -146,6 +148,9 @@ export default function StoreScreen({ navigation, route }) {
                             menuId: menu.menuId,
                             storeId: storeId,
                             storeName: store.storeName,
+                            minOrder: store.storeMinimumOrderAmount,
+                            storeDeliveryTime:
+                              store.distanceFromStoreToCustomer,
                           })
                         }
                         disabled={!menu.menuPossible}

@@ -5,7 +5,7 @@ export const paymentApi = async (url, method, body, params) => {
   const res = await axios({
     url,
     method,
-    baseURL: "https://waguwagu.shop", // 변경 필요
+    baseURL: "http://35.222.175.132", // 변경 필요
     data: body,
     params: params,
     // headers: {

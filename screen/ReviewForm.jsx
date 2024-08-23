@@ -13,7 +13,6 @@ import {
 import { Rating } from "react-native-ratings";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const ReviewForm = ({ route, navigation }) => {
   const { storeId, storeName, userName } = route.params;

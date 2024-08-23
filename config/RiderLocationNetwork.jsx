@@ -3,7 +3,7 @@ export const riderLocationApi = async (url, method, body, params) => {
   const res = await axios({
     url,
     method,
-    baseURL: "https://waguwagu.shop", // baseURL
+    baseURL: "http://35.222.175.132", // baseURL
     data: body,
     params: params,
     //   headers: {

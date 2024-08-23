@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-
+import { Rating } from "react-native-ratings";
 const MyReviewScreen = ({ userId }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +64,7 @@ const MyReviewScreen = ({ userId }) => {
             <Text style={styles.storeName}>{item.storeName}</Text>
             <Text style={styles.userName}>{item.userName}</Text>
             <Text style={styles.content}>{item.content}</Text>
-            <Text style={styles.rating}>별점: {item.rating}</Text>
+            <Rating style={styles.rating}>별점: {item.rating}</Rating>
             <Text style={styles.timestamp}>
               작성 시간: {new Date(item.timestamp).toLocaleString()}
             </Text>

@@ -240,7 +240,7 @@ export default function SearchScreen({ navigation }) {
               key={item.storeId}
               width={dimensionWidth}
               title={item.storeName}
-              image={item.storeImage ? `${imageBaseUrl}${item.storeImage}` : null}
+              image={item.storeImage}
               storeMinimumOrderAmount={item.storeMinimumOrderAmount}
               fee={item.deliveryFee}
               onPress={() => handleItemPress(item.storeId)}

@@ -300,16 +300,7 @@ export default function App() {
               headerTintColor: "#000",
             }}
           />
-          <Stack.Screen
-            name="CartScreen"
-            component={CartScreen}
-            options={{
-              title: "장바구니",
-              headerTintColor: "#000",
-              headerBackTitleVisible: false,
-              // headerTransparent: true,
-            }}
-          />
+          <Stack.Screen name="CartScreen" component={CartScreen} />
           <Stack.Screen
             name="MenuDetailScreen"
             component={MenuDetailScreen}

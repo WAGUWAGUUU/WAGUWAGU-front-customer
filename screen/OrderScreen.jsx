@@ -10,6 +10,7 @@ import {
   Linking,
   AppState,
   Dimensions,
+  Platform,
 } from "react-native";
 
 import { createPayment } from "../config/PaymentApi";
@@ -24,6 +25,7 @@ import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function OrderScreen({ route, navigation }) {
+  const { storeDeliveryTime } = route.params;
   const [riderRequest, setRiderRequest] = useState("");
   const [consumerRequest, setConsumerRequest] = useState("");
   const [showInput, setShowInput] = useState(false);
@@ -137,11 +139,12 @@ export default function OrderScreen({ route, navigation }) {
     const requestPaymentDto = {
       payNum: 1000,
       payAmount: cartTotal,
-      failRedirUrl: "exp://192.168.0.25:8081",
-      successRedirUrl: "exp://192.168.0.25:8081",
+      failRedirUrl: "exp://192.168.45.216:8081",
+      successRedirUrl: "exp://192.168.45.216:8081",
     };
 
     const res = await requestDdalkakPayment(requestPaymentDto);
+    console.log(res);
     if (res.data.code === 0) {
       await Linking.openURL(res.data.appLink);
       setPayId(res.data.payId);
@@ -149,10 +152,13 @@ export default function OrderScreen({ route, navigation }) {
   };
 
   const handlePaymentAndOrder = async () => {
-    // if (payState === "PAY_COMPLETE") {
-    //   console.log(payState, "결제 진행");
-    await handleCreateOrder();
-    // } else await handlePayment(cartTotal);
+    console.log(Platform.OS);
+    if (Platform.OS === "android") {
+      if (payState === "PAY_COMPLETE") {
+        console.log(payState, "결제 진행");
+        await handleCreateOrder();
+      } else await handlePayment(cartTotal);
+    } else await handleCreateOrder();
   };
 
   const notifyAndPlayAudio = async (storeId) => {
@@ -226,7 +232,7 @@ export default function OrderScreen({ route, navigation }) {
   }
 
   const savePaymentState = async (e) => {
-    if (payId && e.url === "exp://192.168.0.25:8081") {
+    if (payId && e.url === "exp://192.168.45.216:8081") {
       console.log(payId, "결제 시");
       const paymentState = await getPaymentState(payId);
       setPayState(paymentState.payState);
@@ -248,7 +254,12 @@ export default function OrderScreen({ route, navigation }) {
     >
       <View style={styles.deliveryInfo}>
         <Text style={styles.deliveryText}>한집 배달</Text>
-        <Text style={styles.deliveryText}>15분~30분</Text>
+        <Text style={styles.deliveryText}>
+          {parseInt(storeDeliveryTime * 4 + 10) +
+            "~" +
+            parseInt(storeDeliveryTime * 4 + 25) +
+            "분"}
+        </Text>
       </View>
 
       <Text style={styles.title}>주문하기</Text>
