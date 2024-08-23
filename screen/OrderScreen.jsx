@@ -161,7 +161,7 @@ export default function OrderScreen({ route, navigation }) {
     } else await handleCreateOrder();
   };
 
-  const notifyAndPlayAudio = async (ownerId) => {
+  const notifyAndPlayAudio = async (storeId) => {
     try {
       const response = await fetch(
         "http://34.41.123.200/alarm/notify/order-completed",
@@ -170,7 +170,7 @@ export default function OrderScreen({ route, navigation }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ store_id: ownerId }),
+          body: JSON.stringify({ store_id: storeId }),
         }
       );
 

@@ -22,7 +22,7 @@ export default function SearchStoreListSpeechBubble(props) {
                     "https://storage.googleapis.com/waguwagu_bucket/" +
                     props.image,
                 }
-              : require("./../assets/food icon.png")
+              : require("./../assets/food-icon.png")
             }
           />
         </View>

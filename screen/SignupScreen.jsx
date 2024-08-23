@@ -45,26 +45,30 @@ const SignupScreen = ({ navigation }) => {
             setCustomerNickname(customerNickname);
           } else {
             navigation.replace("Main");
+
             // Save customer data to AsyncStorage
-            await AsyncStorage.setItem(
-              "customerId",
-              JSON.stringify(customerId)
-            );
-            await AsyncStorage.setItem("customerNickname", customerNickname);
-            await AsyncStorage.setItem("customerEmail", customerEmail);
-            await AsyncStorage.setItem("customerAddress", customerAddress);
-            await AsyncStorage.setItem(
-              "customerLatitude",
-              JSON.stringify(customerLatitude)
-            );
-            await AsyncStorage.setItem(
-              "customerLongitude",
-              JSON.stringify(customerLongitude)
-            );
+            if (customerId) {
+              await AsyncStorage.setItem("customerId", JSON.stringify(customerId));
+            }
+            if (customerNickname) {
+              await AsyncStorage.setItem("customerNickname", customerNickname);
+            }
+            if (customerEmail) {
+              await AsyncStorage.setItem("customerEmail", customerEmail);
+            }
+            if (customerAddress) {
+              await AsyncStorage.setItem("customerAddress", customerAddress);
+            }
+            if (customerLatitude) {
+              await AsyncStorage.setItem("customerLatitude", JSON.stringify(customerLatitude));
+            }
+            if (customerLongitude) {
+              await AsyncStorage.setItem("customerLongitude", JSON.stringify(customerLongitude));
+            }
 
             // WebSocket 연결 설정
-            // connectWebSocket(customerId);
-            connectWebSocket(await AsyncStorage.getItem("customerId"));
+            const storedCustomerId = await AsyncStorage.getItem("customerId");
+            connectWebSocket(storedCustomerId);
           }
         }
       } catch (error) {
@@ -82,6 +86,7 @@ const SignupScreen = ({ navigation }) => {
       }
     };
   }, []);
+
 
   const connectWebSocket = (customerId) => {
     let reconnectInterval = 5000; // 5초 후 재연결 시도
@@ -159,43 +164,40 @@ const SignupScreen = ({ navigation }) => {
       Alert.alert("유효하지 않은 이메일", "올바른 이메일 형식이 아닙니다!");
       return;
     }
-    if (
-      !customerEmail ||
-      !customerNickname ||
-      !customerPhone ||
-      !customerAddress
-    ) {
+    if (!customerEmail || !customerNickname || !customerPhone || !customerAddress) {
       Alert.alert("빈 칸 오류", "빈 칸 없이 모두 입력해주세요!");
       return;
     }
     if (!phonePattern.test(customerPhone)) {
-      Alert.alert(
-        "유효하지 않은 전화번호",
-        "전화번호는 11자리 숫자로 입력해주세요!"
-      );
+      Alert.alert("유효하지 않은 전화번호", "전화번호는 11자리 숫자로 입력해주세요!");
       return;
     }
 
-        try {
-            const res = await updateInfo({ customerNickname, customerAddress, customerLatitude, customerLongitude, customerPhone });
-            if (res.status === 200) {
-                Alert.alert('회원가입 성공', '회원가입이 완료되었습니다!');
-                navigation.replace('Main');
-                connectWebSocket(await AsyncStorage.setItem('customerId'));
-            } else {
-                Alert.alert('회원가입 실패', '회원가입에 실패했습니다. 다시 시도해주세요.');
-            }
-        } catch (error) {
-            console.log("회원가입 중 에러", error);
-            Alert.alert('Error', '회원가입 중 에러가 발생했습니다.');
+    try {
+      const res = await updateInfo({ customerNickname, customerAddress, customerLatitude, customerLongitude, customerPhone });
+      if (res.status === 200) {
+        Alert.alert('회원가입 성공', '회원가입이 완료되었습니다!');
+        navigation.replace('Main');
+
+        // Store customerId and connect WebSocket
+        const storedCustomerId = await AsyncStorage.getItem('customerId');
+        if (storedCustomerId) {
+          connectWebSocket(storedCustomerId);
         }
-    };
+      } else {
+        Alert.alert('회원가입 실패', '회원가입에 실패했습니다. 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.log("회원가입 중 에러", error);
+      Alert.alert('Error', '회원가입 중 에러가 발생했습니다.');
+    }
+  };
 
   return (
     <View style={{ backgroundColor: "#fff" }}>
       <View style={styles.container}>
         <Image
-          source={require("../assets/food icon.png")} // 첫 번째 이미지 경로
+          source={require("../assets/food-icon.png")} // 첫 번째 이미지 경로
           style={styles.iconImage}
         />
         <Image
@@ -242,7 +244,7 @@ const SignupScreen = ({ navigation }) => {
           >
             <SpeechBubble
               content="주소 확인"
-              backgroundColor="#94D35C"
+              backgroundColor="#EECAD5"
               textColor="#634F4F"
               height={50}
               width="100%"

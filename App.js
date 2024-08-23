@@ -1,7 +1,13 @@
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs(); // 모든 로그 무시
+
 import { NavigationContainer } from "@react-navigation/native";
+
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 // import { AppRegistry } from "react-native";
+
 
 import { name as appName } from "./app.json";
 import { Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
