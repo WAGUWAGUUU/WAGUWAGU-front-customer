@@ -23,7 +23,6 @@ export default function SearchScreen({ navigation }) {
   const [searchHistory, setSearchHistory] = useState([]);
 
   const dimensionWidth = 300;
-  const imageBaseUrl = "https://storage.googleapis.com/wgwg_bucket/";
 
   const handleSearch = async (type, reset = false) => {
     try {
@@ -33,11 +32,13 @@ export default function SearchScreen({ navigation }) {
         size: 10,
       };
       let data = [];
+
       if (type === "keyword") {
         if (!keywordQuery) {
           Alert.alert("알림", "검색할 키워드를 입력해주세요.");
           return;
         }
+
         data = await searchByKeyword(keywordQuery, pageable);
         console.log("Search Results: ", data);
       }
@@ -97,17 +98,6 @@ export default function SearchScreen({ navigation }) {
         return;
       }
 
-      // Map the store data to include necessary fields
-      const storeItems = storesNearUser.map(store => ({
-        storeId: store.storeId || "1",
-        storeName: store.storeName || "초록마을 짱구할아버지네",
-        storeIntroduction: store.storeIntroduction || "안녕하세요~ 초록마을에 사는 짱구할아버지예요~",
-        storeImage: store.storeImage || "default_image_url",  // Update with actual default image if needed
-        storeMinimumOrderAmount: store.storeMinimumOrderAmount || 0,
-        deliveryFee: store.deliveryFee || 0,
-      }));
-
-      // Save store data and menus
       for (const store of storesNearUser) {
         let menuDetails = [];
         try {
@@ -147,9 +137,9 @@ export default function SearchScreen({ navigation }) {
         }
       }
 
-      // Set the results and reset the page
-      setResults(storeItems);
-      handleSearch("keyword", true);
+      // After saving, run the search and display results
+      handleSearch(true);
+
     } catch (error) {
       console.error("Failed to save stores:", error);
     } finally {
@@ -247,7 +237,7 @@ export default function SearchScreen({ navigation }) {
             />
           );
         }}
-        onEndReached={loadMoreResults}
+        onEndReached={loadMoreResults} // Ensure this references the correct function
         onEndReachedThreshold={0.5}
       />
     </View>
