@@ -118,7 +118,7 @@ export default function OrderScreen({ route, navigation }) {
       console.log("Order created successfully:", savedOrderId);
 
       // 주문 생성 후 알림 요청을 보내고 음성 파일 재생
-      // await notifyAndPlayAudio(storeId);
+      await notifyAndPlayAudio(storeId);
 
       Alert.alert("주문 성공", "주문이 성공적으로 생성되었습니다.", [
         {
@@ -155,7 +155,7 @@ export default function OrderScreen({ route, navigation }) {
     // } else await handlePayment(cartTotal);
   };
 
-  const notifyAndPlayAudio = async (ownerId) => {
+  const notifyAndPlayAudio = async (storeId) => {
     try {
       const response = await fetch(
         "http://34.41.123.200/alarm/notify/order-completed",
@@ -164,7 +164,7 @@ export default function OrderScreen({ route, navigation }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ store_id: ownerId }),
+          body: JSON.stringify({ store_id: storeId }),
         }
       );
 

@@ -92,7 +92,7 @@ export default function StoreScreen({ navigation, route }) {
                     "https://storage.googleapis.com/waguwagu_bucket/" +
                     store.storeImage,
                 }
-              : require("./../assets/food icon.png")
+              : require("../assets/food-icon.png")
           }
         />
         <View style={styles.textContainer}>

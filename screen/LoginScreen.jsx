@@ -14,7 +14,7 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/food icon.png")}
+          source={require("../assets/food-icon.png")}
           style={styles.iconImage}
         />
         <Image

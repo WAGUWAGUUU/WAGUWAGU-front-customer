@@ -197,7 +197,7 @@ const SignupScreen = ({ navigation }) => {
     <View style={{ backgroundColor: "#fff" }}>
       <View style={styles.container}>
         <Image
-          source={require("../assets/food icon.png")} // 첫 번째 이미지 경로
+          source={require("../assets/food-icon.png")} // 첫 번째 이미지 경로
           style={styles.iconImage}
         />
         <Image
